@@ -7,7 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class PictureGenerator {
-	public static void generate(String name, String text) {
+	public static void generate(String text, String name) {
 		BufferedImage image = new BufferedImage(100, 100,
 				BufferedImage.TYPE_INT_RGB);
 		// Draw text
