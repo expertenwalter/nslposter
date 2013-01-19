@@ -16,7 +16,8 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 public class NSLPoster {
-	public static void post(String board, String subject, String picture, String message) {
+	public static void post(String board, String subject, String picture,
+			String message) {
 
 		try {
 			HttpClient httpclient = new DefaultHttpClient();

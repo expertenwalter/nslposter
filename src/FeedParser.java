@@ -17,18 +17,17 @@ import org.w3c.dom.NodeList;
 
 public class FeedParser {
 
-	public static String extractPicture(String content)
-	{
+	public static String extractPicture(String content) {
 		Source source = new Source(content);
 		source.fullSequentialParse();
 		Element image = source.getFirstElement(HTMLElementName.IMG);
-		
-		if(image != null)
+
+		if (image != null)
 			return image.getAttributeValue("src");
 		else
 			return "";
 	}
-	
+
 	public static RSSEntry parseRSSEntry(Node data) {
 		RSSEntry entry = new RSSEntry();
 
@@ -58,10 +57,10 @@ public class FeedParser {
 						.length());
 				Renderer htmlRend = new Renderer(htmlSeg);
 				entry.description = htmlRend.toString();
-				
+
 				// Extract picture, if any
 				entry.picture = extractPicture(n.getTextContent());
-				
+
 			}
 		}
 

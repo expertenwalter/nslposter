@@ -22,32 +22,27 @@ public class Main {
 		System.out
 				.println("  --update-only   Download the feed and update the database, but don't post anything");
 	}
-	
-	public static void saveUrl(String urlString, String filename) throws MalformedURLException, IOException
-    {
-    	BufferedInputStream in = null;
-    	FileOutputStream fout = null;
-    	try
-    	{
-    		in = new BufferedInputStream(new URL(urlString).openStream());
-    		fout = new FileOutputStream(filename);
 
-    		byte data[] = new byte[1024];
-    		int count;
-    		while ((count = in.read(data, 0, 1024)) != -1)
-    		{
-    			fout.write(data, 0, count);
-    		}
-    	}
-    	finally
-    	{
-    		if (in != null)
-    			in.close();
-    		if (fout != null)
-    			fout.close();
-    	}
-    }
+	public static void saveUrl(String urlString, String filename)
+			throws MalformedURLException, IOException {
+		BufferedInputStream in = null;
+		FileOutputStream fout = null;
+		try {
+			in = new BufferedInputStream(new URL(urlString).openStream());
+			fout = new FileOutputStream(filename);
 
+			byte data[] = new byte[1024];
+			int count;
+			while ((count = in.read(data, 0, 1024)) != -1) {
+				fout.write(data, 0, count);
+			}
+		} finally {
+			if (in != null)
+				in.close();
+			if (fout != null)
+				fout.close();
+		}
+	}
 
 	public static void doFeed(String board, String feedAddress,
 			boolean optUpdateOnly) {
@@ -97,18 +92,16 @@ public class Main {
 
 					if (!optUpdateOnly) {
 						// Fetch picture or generate it
-						if(entry.picture != null && !entry.picture.equals(""))
-						{
+						if (entry.picture != null && !entry.picture.equals("")) {
 							saveUrl(entry.picture, entry.title + ".jpg");
+						} else {
+							PictureGenerator.generate(entry.title, entry.title
+									+ ".jpg");
 						}
-						else
-						{
-							PictureGenerator.generate(entry.title, entry.title + ".jpg");
-						}
-						
-						NSLPoster.post(board, entry.title, entry.title + ".jpg", entry.link + "\n\n"
-								+ entry.description);
-						
+
+						NSLPoster.post(board, entry.title,
+								entry.title + ".jpg", entry.link + "\n\n"
+										+ entry.description);
 
 						// Delete picture
 						new File(entry.title + ".jpg").delete();
